@@ -1,0 +1,43 @@
+<article>
+    <header>
+        <div class="text-center header">
+            ATM
+        </div>
+    </header>
+    <main>
+        <div class="d-flex flex-column content-body">
+            <div>
+                Amount in ATM: ₹{{ cash.totalAmount }}<br/>
+                {{ denomination.first }} = {{ cash.first }}<br/>
+                {{ denomination.second }} = {{ cash.second }}<br/>
+                {{ denomination.third }} = {{ cash.third }}<br/>
+                {{ denomination.fourth }} = {{ cash.fourth }}<br/>
+            </div>
+            <div>
+                <input type="button" value="Deposit" (click)="activateDeposit()" />
+                <input type="button" value="Withdraw" (click)="activateWithdraw()" />
+            </div>
+            <div *ngIf="deposit">
+                Enter {{ denomination.first }} note count: <input type="number"
+                    [(ngModel)]="depositCashValues.first" /><br />
+                Enter {{ denomination.second }} note count: <input type="number"
+                    [(ngModel)]="depositCashValues.second" /><br />
+                Enter {{ denomination.third }} note count: <input type="number"
+                    [(ngModel)]="depositCashValues.third" /><br />
+                Enter {{ denomination.fourth }} note count: <input type="number"
+                    [(ngModel)]="depositCashValues.fourth" /><br />
+                <input type="button" value="Deposit Money" (click)="depositCash()" />
+            </div>
+            <div *ngIf="withDraw">
+                Enter amount: <input type="number" [(ngModel)]="amount" />
+                <input type="button" value="Withdraw Money" (click)="withdraw()"
+                    [disabled]="amount <100" />
+            </div>
+        </div>
+    </main>
+    <footer>
+        <div class="text-center footer">
+
+        </div>
+    </footer>
+</article>
