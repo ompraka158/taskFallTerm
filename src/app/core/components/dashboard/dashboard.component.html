@@ -5,33 +5,44 @@
         </div>
     </header>
     <main>
-        <div class="d-flex flex-column content-body">
-            <div>
-                Amount in ATM: ₹{{ cash.totalAmount }}<br/>
-                {{ denomination.first }} = {{ cash.first }}<br/>
-                {{ denomination.second }} = {{ cash.second }}<br/>
-                {{ denomination.third }} = {{ cash.third }}<br/>
-                {{ denomination.fourth }} = {{ cash.fourth }}<br/>
+        <div class="d-flex flex-column justify-content-center content-body">
+            <div class="text-center">
+                Amount in ATM: ₹{{ cash.totalAmount }}<br />
+                {{ denomination.first }} = {{ cash.first }}<br />
+                {{ denomination.second }} = {{ cash.second }}<br />
+                {{ denomination.third }} = {{ cash.third }}<br />
+                {{ denomination.fourth }} = {{ cash.fourth }}<br />
             </div>
-            <div>
-                <input type="button" value="Deposit" (click)="activateDeposit()" />
-                <input type="button" value="Withdraw" (click)="activateWithdraw()" />
+            <div class="text-center">
+                <button type="button" class="btn btn-primary actionButtons" (click)="activateDeposit()">Deposit</button>
+                <button type="button" class="btn btn-primary mx-2" (click)="activateWithdraw()">Withdraw</button>
             </div>
-            <div *ngIf="deposit">
-                Enter {{ denomination.first }} note count: <input type="number"
-                    [(ngModel)]="depositCashValues.first" /><br />
-                Enter {{ denomination.second }} note count: <input type="number"
-                    [(ngModel)]="depositCashValues.second" /><br />
-                Enter {{ denomination.third }} note count: <input type="number"
-                    [(ngModel)]="depositCashValues.third" /><br />
-                Enter {{ denomination.fourth }} note count: <input type="number"
-                    [(ngModel)]="depositCashValues.fourth" /><br />
-                <input type="button" value="Deposit Money" (click)="depositCash()" />
+            <div *ngIf="deposit" class="form-content">
+                <div class="form-group mx-2">
+                    <label for="firstNote">Enter {{ denomination.first }} note count:</label>
+                    <input class="form-control" type="number" [(ngModel)]="depositCashValues.first" />
+                </div>
+                <div class="form-group mx-2">
+                    <label for="secondNote">Enter {{ denomination.second }} note count:</label>
+                    <input class="form-control" type="number" [(ngModel)]="depositCashValues.second" />
+                </div>
+                <div class="form-group mx-2">
+                    <label for="thirdNote">Enter {{ denomination.third }} note count:</label>
+                    <input class="form-control" type="number" [(ngModel)]="depositCashValues.third" />
+                </div>
+                <div class="form-group mx-2">
+                    <label for="fourthNote">Enter {{ denomination.fourth }} note count:</label>
+                    <input class="form-control" type="number" [(ngModel)]="depositCashValues.fourth" />
+                </div>
+                <button type="button" class="btn btn-primary" (click)="depositCash()">Deposit Money</button>
             </div>
-            <div *ngIf="withDraw">
-                Enter amount: <input type="number" [(ngModel)]="amount" />
-                <input type="button" value="Withdraw Money" (click)="withdraw()"
-                    [disabled]="amount <100" />
+            <div *ngIf="withDraw" class="form-content">
+                <div class="form-group mx-2">
+                    <label for="fourthNote">Enter amount:</label>
+                    <input class="form-control" type="number" [(ngModel)]="amount" />
+                </div>
+                <button type="button" class="btn btn-primary" (click)="withdraw()" [disabled]="amount <100">Withdraw
+                    Money</button>
             </div>
         </div>
     </main>

@@ -34,12 +34,20 @@ export class DashboardComponent implements OnInit {
   }
 
   activateDeposit() {
-    this.deposit = true;
+    if(this.deposit) {
+      this.deposit = false;
+    } else{
+      this.deposit = true;
+    }
     this.withDraw = false;
   }
 
   activateWithdraw() {
-    this.withDraw = true;
+    if(this.withDraw) {
+      this.withDraw = false;
+    } else {
+      this.withDraw = true;
+    }
     this.deposit = false;
   }
 
@@ -49,14 +57,18 @@ export class DashboardComponent implements OnInit {
     this.cash.third += this.depositCashValues.third;
     this.cash.fourth += this.depositCashValues.fourth;
     this.cash.totalAmount += ((this.depositCashValues.first * this.denomination.first) + (this.depositCashValues.second * this.denomination.second) + (this.depositCashValues.third * this.denomination.third) + (this.depositCashValues.fourth * this.denomination.fourth));
-    this.deposit = false;
     let keys = Object.keys(this.denomination);
     keys.forEach(key => {
       this.depositCashValues[key] = 0;
     });
+    this.deposit = false;
   }
 
   withdraw() {
+    if(this.cash.totalAmount === 0) {
+      alert('No money in the ATM');
+      return;
+    }
     if (this.amount > this.cash.totalAmount) {
       alert('Amount indispensable');
     } else if (this.amount % 100 !== 0) {

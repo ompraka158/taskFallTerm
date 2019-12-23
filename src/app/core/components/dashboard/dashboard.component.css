@@ -21,13 +21,26 @@ header, main, footer {
 
 .header {
     height: 60px;
+    vertical-align: middle !important;
+    font-size: 30px !important;
+    font-weight: bold;
 }
 
 .footer {
     height: 60px;
 }
 
+.form-content {
+    width: 50% !important;
+    margin: auto !important;
+    text-align: center !important;
+}
+
 .content-body {
     background-color: aqua;
     height: calc(100vh - 140px);
+}
+
+.actionButtons {
+    margin: 10px !important;
 }
