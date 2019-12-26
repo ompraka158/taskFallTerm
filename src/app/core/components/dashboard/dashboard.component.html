@@ -7,11 +7,8 @@
     <main>
         <div class="d-flex flex-column justify-content-center content-body">
             <div class="text-center">
-                Amount in ATM: ₹{{ cash.totalAmount }}<br />
-                {{ denomination.first }} = {{ cash.first }}<br />
-                {{ denomination.second }} = {{ cash.second }}<br />
-                {{ denomination.third }} = {{ cash.third }}<br />
-                {{ denomination.fourth }} = {{ cash.fourth }}<br />
+                Amount in ATM: ₹{{ cash.totalAmount }}<br /> {{ denomination.first }} = {{ cash.first }}<br /> {{ denomination.second }} = {{ cash.second }}<br /> {{ denomination.third }} = {{ cash.third }}<br /> {{ denomination.fourth }} = {{ cash.fourth
+                }}<br />
             </div>
             <div class="text-center">
                 <button type="button" class="btn btn-primary actionButtons" (click)="activateDeposit()">Deposit</button>

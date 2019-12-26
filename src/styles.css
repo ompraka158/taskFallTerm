@@ -1,3 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
+
+
 /* You can add global styles to this file, and also import other style files */
+
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+.show {
+    display: contents !important;
+}
+
+.modal-dialog {
+    position: absolute !important;
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate(-50%, -50%) !important;
+}

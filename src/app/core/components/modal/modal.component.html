@@ -1,1 +1,11 @@
-<p>modal works!</p>
+<div class="d-flex flex-column justify-content-between modal-container">
+    <div class="mx-auto text-center mt-4">
+        <h3>Information</h3>
+    </div>
+    <div class="mx-3 my-2 text-center">
+        <h4 class="text-center modal-message">{{ data }}</h4>
+    </div>
+    <div class="mx-auto text-center mb-4 modal-btn-container">
+        <button type="button" class="btn modal-btn" (click)="close()">OK</button>
+    </div>
+</div>

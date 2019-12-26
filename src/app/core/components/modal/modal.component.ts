@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-modal',
@@ -7,9 +8,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ModalComponent implements OnInit {
 
-  constructor() { }
+  @Input() data;
+  @Output() emitAfterModalIsClosed: EventEmitter<boolean> = new EventEmitter()
+  constructor(
+    private modalService: NgbModal
+  ) { 
+  }
 
   ngOnInit() {
+  }
+
+  close() {
+    this.modalService.dismissAll();
+    this.emitAfterModalIsClosed.emit(true);
   }
 
 }

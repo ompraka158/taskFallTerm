@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Cash } from '../../models/cash';
 import { Denomination } from '../../constants/denominations';
+import { ModalService } from '../../services/modal.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -28,7 +29,11 @@ export class DashboardComponent implements OnInit {
   denomination = Denomination;
   deposit: boolean = false;
   withDraw: boolean = false;
-  constructor() { }
+
+  keys = Object.keys(this.denomination);
+  constructor(
+    private _modalService: ModalService
+  ) { }
 
   ngOnInit() {
   }
@@ -52,27 +57,23 @@ export class DashboardComponent implements OnInit {
   }
 
   depositCash() {
-    this.cash.first += Number(this.depositCashValues.first);
-    this.cash.second += this.depositCashValues.second;
-    this.cash.third += this.depositCashValues.third;
-    this.cash.fourth += this.depositCashValues.fourth;
-    this.cash.totalAmount += ((this.depositCashValues.first * this.denomination.first) + (this.depositCashValues.second * this.denomination.second) + (this.depositCashValues.third * this.denomination.third) + (this.depositCashValues.fourth * this.denomination.fourth));
-    let keys = Object.keys(this.denomination);
-    keys.forEach(key => {
+    this.keys.forEach(key => {
+      this.cash[key] += this.depositCashValues[key];
+      this.cash.totalAmount += this.depositCashValues[key]*this.denomination[key];
       this.depositCashValues[key] = 0;
-    });
+    })
     this.deposit = false;
   }
 
   withdraw() {
     if(this.cash.totalAmount === 0) {
-      alert('No money in the ATM');
+      this._modalService.openModal('No money in the ATM');
       return;
     }
     if (this.amount > this.cash.totalAmount) {
-      alert('Amount indispensable');
+      this._modalService.openModal('Amount indispensable');
     } else if (this.amount % 100 !== 0) {
-      alert('Please enter amount in multiple of 100');
+      this._modalService.openModal('Please enter amount in multiple of 100');
     } else {
       let dispensableCash: Cash = {
         first: 0,
@@ -82,8 +83,7 @@ export class DashboardComponent implements OnInit {
         totalAmount: 0
       };
       let amount = this.amount;
-      let keys = Object.keys(this.denomination);
-      keys.forEach(key => {
+      this.keys.forEach(key => {
         let modValue = Math.floor(amount / this.denomination[key]);
         if (amount >= this.denomination[key]) {
           if (modValue > this.cash[key]) {
@@ -96,14 +96,18 @@ export class DashboardComponent implements OnInit {
       })
       dispensableCash.totalAmount = this.amount;
       if (amount === 0) {
-        keys.forEach(key => {
+        let message = `Amount dispensed: ₹${dispensableCash.totalAmount} with denominations `;
+        this.keys.forEach(key => {
           this.cash[key] -= dispensableCash[key];
+          if(dispensableCash[key]>0) {
+            message+= `${this.denomination[key]}=${dispensableCash[key]}, `
+          }
         })
         this.cash.totalAmount -= this.amount;
         this.amount = 0;
-        alert(`Amount dispensed: ₹${dispensableCash.totalAmount} with denominations ${this.denomination.first}=${dispensableCash.first}, ${this.denomination.second}=${dispensableCash.second}, ${this.denomination.third}=${dispensableCash.third}, and ${this.denomination.fourth}=${dispensableCash.fourth}`);
+        this._modalService.openModal(message);
       } else {
-        alert("Unable to dispense");
+        this._modalService.openModal("Unable to dispense");
       }
     }
     this.withDraw = false;
